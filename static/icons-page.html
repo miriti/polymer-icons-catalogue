@@ -1,0 +1,76 @@
+<dom-module id="icons-page">
+    <template>
+        <style>
+            iron-icon {
+                margin-right: 5px;
+            }
+        </style>
+        <paper-spinner hidden$="{{loaded}}" active></paper-spinner>
+        <paper-menu>
+            <template is="dom-repeat" items="{{icons}}" observe="shown">
+                <paper-item hidden$="{{!item.shown}}" on-click="iconSelected">
+                    <iron-icon icon$="{{item.icon}}"></iron-icon>
+                    <span>{{item.icon}}</span>
+                </paper-item>
+            </template>
+        </paper-menu>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'icons-page',
+        loaded: false,
+        icons: [],
+        attached: function () {
+            var sets = ['communication', 'device', 'editor', 'hardware', 'image', 'maps', 'notification', 'av', 'iron'];
+
+            var self = this;
+            self.icons = [];
+
+            var loadSet = function (namespace, iconset) {
+                self.importHref('lib/iron-icons/' + iconset + '-icons.html', function () {
+                    $.ajax({
+                        url: 'lib/iron-icons/' + iconset + '-icons.html',
+                        success: function (data) {
+                            var regex = /<g id\=\"([^\"]+)\"/g;
+                            var ids;
+                            while ((ids = regex.exec(data)) !== null) {
+                                var id = ids[1];
+                                self.push('icons', {
+                                    namespace: namespace,
+                                    id: id,
+                                    icon: (namespace == null ? '' : namespace + ':') + id,
+                                    shown: true
+                                });
+                            }
+                            if (sets.length > 0) {
+                                var n = sets.pop();
+                                loadSet(n, n);
+                            } else {
+                                self.loaded = true;
+                            }
+                        }
+                    });
+                });
+            };
+
+            loadSet(null, sets.pop());
+        },
+        showAll: function () {
+            for (var i in this.icons) {
+                this.set('icons.' + i + '.shown', true);
+            }
+        },
+        search: function (query) {
+            for (var i in this.icons) {
+                if (this.icons[i].icon) {
+                    this.set('icons.' + i + '.shown', (this.icons[i].icon.indexOf(query) !== -1));
+                }
+            }
+        },
+        iconSelected: function(e) {
+            this.fire('icon-selected', e.model.item);
+        }
+    });
+</script>

@@ -1,0 +1,29 @@
+<dom-module id="icon-info">
+    <template>
+        <style>
+            #container {
+                padding: 16px;
+            }
+        </style>
+        <div id="container">
+            <div hidden="{{icon}}">
+                Please choose the icon
+            </div>
+            <div hidden="{{!icon}}">
+                <iron-icon icon="{{icon.icon}}" style="width: 40px; height: 40px;"></iron-icon>
+                <iron-icon icon="{{icon.icon}}"></iron-icon>
+                <iron-icon icon="{{icon.icon}}"></iron-icon>
+            </div>
+        </div>
+    </template>
+</dom-module>
+
+<script>
+    Polymer({
+        is: 'icon-info',
+        icon: null,
+        showInfo: function (detail) {
+            this.set('icon', detail);
+        }
+    });
+</script>
