@@ -49,6 +49,7 @@
                                 loadSet(n, n);
                             } else {
                                 self.loaded = true;
+                                self.fire('loaded');
                             }
                         }
                     });
@@ -69,8 +70,15 @@
                 }
             }
         },
-        iconSelected: function(e) {
+        iconSelected: function (e) {
             this.fire('icon-selected', e.model.item);
+        },
+        getDetail: function (iconName) {
+            for (var i in this.icons) {
+                if (this.icons[i].icon == iconName) {
+                    return this.icons[i];
+                }
+            }
         }
     });
 </script>

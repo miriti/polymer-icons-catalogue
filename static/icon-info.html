@@ -4,15 +4,40 @@
             #container {
                 padding: 16px;
             }
+
+            table td {
+                text-align: center;
+            }
         </style>
         <div id="container">
-            <div hidden="{{icon}}">
-                Please choose the icon
-            </div>
-            <div hidden="{{!icon}}">
-                <iron-icon icon="{{icon.icon}}" style="width: 40px; height: 40px;"></iron-icon>
-                <iron-icon icon="{{icon.icon}}"></iron-icon>
-                <iron-icon icon="{{icon.icon}}"></iron-icon>
+            <div class="info" hidden>
+                <h1>{{icon.icon}}</h1>
+                <table>
+                    <tr>
+                        <td>
+                            <iron-icon icon="{{icon.icon}}" style="width: 144px; height: 144px;"></iron-icon>
+                        </td>
+                        <td>
+                            <iron-icon icon="{{icon.icon}}" style="width: 72px; height: 72px;"></iron-icon>
+                        </td>
+                        <td>
+                            <iron-icon icon="{{icon.icon}}"></iron-icon>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>144px</td>
+                        <td>72px</td>
+                        <td>default</td>
+                    </tr>
+                </table>
+                <template is="dom-if" if="{{icon.namespace}}">
+                    <code>
+                        &lt;import rel="import" href="<span>{{linkHref(icon.namespace)}}</span>"&gt;&lt;/import&gt;
+                    </code>
+                </template>
+                <code>
+                    &lt;iron-icon icon="<span>{{icon.icon}}</span>"&gt;&lt;iron-icon&gt;
+                </code>
             </div>
         </div>
     </template>
@@ -22,8 +47,15 @@
     Polymer({
         is: 'icon-info',
         icon: null,
+        selected: false,
+        linkHref: function (namespace) {
+            return 'bower_components/iron-icons/' + namespace + '-icons.html';
+        },
         showInfo: function (detail) {
             this.set('icon', detail);
+            this.set('selected', true);
+
+            this.$.container.querySelector('.info').removeAttribute('hidden');
         }
     });
 </script>
