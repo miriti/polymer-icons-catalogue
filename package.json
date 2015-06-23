@@ -1,0 +1,28 @@
+{
+  "name": "polymer-icons-catalog",
+  "version": "1.0.0",
+  "description": "Polymer icons catalogut",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miriti/polymer-icons-catalogue.git"
+  },
+  "keywords": [
+    "polymer",
+    "polymer-project",
+    "icons"
+  ],
+  "author": "Michael Miriti <michael@miriti.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/miriti/polymer-icons-catalogue/issues"
+  },
+  "homepage": "https://github.com/miriti/polymer-icons-catalogue#readme",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-webserver": "^0.9.1"
+  }
+}
